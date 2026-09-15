@@ -1,4 +1,4 @@
-# 100 Ngày Giao Tiếp – PWA V3
+# 100 Ngày Giao Tiếp – PWA V5
 
 ## Tính năng mới
 - Lần đầu mở app sẽ hỏi: tên người dùng, tuổi, giới tính và giọng đọc Nam/Nữ.

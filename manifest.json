@@ -1,0 +1,10 @@
+{
+  "name":"100 Ngày Giao Tiếp",
+  "short_name":"100 Ngày",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#0b1220",
+  "theme_color":"#0b1220",
+  "lang":"vi",
+  "icons":[]
+}

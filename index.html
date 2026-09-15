@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="100 Ngày Giao Tiếp">
+<link rel="manifest" href="manifest.json">
+<title>100 Ngày Giao Tiếp</title>
+<style>
+:root{--bg:#0b1220;--card:#121c2d;--card2:#172338;--text:#f5f7fb;--muted:#9ca9bd;--line:#26344b;--accent:#5eead4;--warn:#fbbf24;--good:#86efac;--danger:#fb7185}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#08101d,#0e1728 55%,#0b1220);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}.wrap{max-width:900px;margin:auto;padding:18px 16px 40px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.brand{font-weight:800;font-size:20px}.pill{border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:#0f1a2b;color:var(--muted)}.card{background:rgba(18,28,45,.94);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 10px 30px rgba(0,0,0,.15)}.hero{padding:20px}.h1{font-size:30px;font-weight:850;line-height:1.15}.sub{color:var(--muted);margin-top:7px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.btn{border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:12px;padding:11px 14px;font-weight:700}.btn.primary{background:#163b4a;border-color:#2b7a7b}.btn.active{outline:2px solid var(--accent)}.btn.small{padding:8px 10px;font-size:14px}.daygrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.day{min-height:58px}.day .d{font-weight:800}.day .t{font-size:11px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sentence{border:1px solid var(--line);border-radius:15px;padding:14px;background:#0f1929}.sentence+.sentence{margin-top:9px}.line1{font-size:18px;font-weight:800}.pinyin{color:#93c5fd;margin-top:5px}.vi{color:#d6deea;margin-top:6px}.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.tag{font-size:12px;padding:5px 8px;border-radius:999px;border:1px solid var(--line)}.new{color:#fde68a}.old{color:#86efac}.explain{margin-top:9px;color:var(--muted);font-size:14px;line-height:1.5}.audioBox{position:sticky;bottom:10px;background:rgba(11,18,32,.94);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:15px}.progress{height:5px;background:#1d293c;border-radius:999px;overflow:hidden}.bar{height:100%;background:var(--accent);width:0}.range{width:100%}.profile label{display:block;margin:10px 0 5px;color:var(--muted);font-size:13px}.profile input,.profile select{width:100%;background:#0e1727;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.notice{font-size:13px;color:var(--muted);line-height:1.5}.hidden{display:none!important}.status{color:var(--good);font-weight:700}.err{color:var(--danger);font-size:13px}.footer{margin-top:15px;color:var(--muted);font-size:12px;line-height:1.5}
+@media(max-width:640px){.daygrid{grid-template-columns:repeat(4,minmax(0,1fr))}.two{grid-template-columns:1fr}.h1{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="brand">🎧 100 Ngày Giao Tiếp</div><button id="profileBtn" class="pill">👤 Hồ sơ</button></div>
+  <div id="setup" class="card profile hidden">
+    <div class="h1">Thiết lập lần đầu</div>
+    <div class="sub">Thông tin này chỉ lưu trên điện thoại của bạn.</div>
+    <label>Tên</label><input id="name" placeholder="Ví dụ: Đạt">
+    <div class="two"><div><label>Tuổi</label><input id="age" type="number" min="1" max="120" placeholder="30"></div><div><label>Giới tính</label><select id="gender"><option value="male">Nam</option><option value="female">Nữ</option><option value="other">Khác / không muốn trả lời</option></select></div></div>
+    <label>Giọng đọc</label><select id="voice"><option value="male">👨 Giọng nam</option><option value="female">👩 Giọng nữ</option></select>
+    <div class="notice" style="margin-top:10px">Audio của app được tạo sẵn bằng giọng Neural/TTS và lưu thành một track dài cho từng ngày. Cách này ổn định hơn khi khóa màn hình iPhone so với việc đổi từng file ở sự kiện “ended”.</div>
+    <div class="row" style="margin-top:14px"><button id="saveProfile" class="btn primary">Bắt đầu học</button></div>
+  </div>
+
+  <div id="app" class="hidden">
+    <div class="card hero">
+      <div class="sub">Xin chào <span id="hello"></span> 👋</div>
+      <div class="h1" id="dayTitle">Ngày 1</div>
+      <div class="sub" id="daySubtitle"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn small lang active" data-lang="en">🇬🇧 English</button>
+        <button class="btn small lang" data-lang="zh">🇨🇳 中文</button>
+        <button id="playAll" class="btn primary">▶ Phát cả ngày</button>
+        <button id="repeatBtn" class="btn small">🔁 Lặp: Tắt</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <span class="pill">Tốc độ</span>
+        <button class="btn small speed" data-speed="0.75">0.75×</button><button class="btn small speed active" data-speed="1">1×</button><button class="btn small speed" data-speed="1.25">1.25×</button><button class="btn small speed" data-speed="1.5">1.5×</button>
+      </div>
+      <div id="audioStatus" class="notice" style="margin-top:10px">Chọn ngày rồi bấm “Phát cả ngày”.</div>
+      <div id="audioError" class="err hidden"></div>
+    </div>
+
+    <div class="card"><div class="sub" style="margin-bottom:10px">Chọn ngày</div><div id="days" class="daygrid"></div></div>
+    <div id="sentences" class="card"></div>
+
+    <div class="audioBox">
+      <div class="row" style="justify-content:space-between"><div><b id="nowLabel">Chưa phát</b><div class="notice" id="nowSub"></div></div><div class="row"><button class="btn small" id="back">⏮</button><button class="btn small" id="toggle">▶</button><button class="btn small" id="next">⏭</button></div></div>
+      <div class="progress" style="margin:11px 0"><div id="bar" class="bar"></div></div>
+      <input id="seek" class="range" type="range" min="0" max="1000" value="0">
+    </div>
+
+    <div class="footer">V9 dùng audio được tạo bằng mô hình TTS mã nguồn mở chạy miễn phí trên GitHub Actions. Mỗi ngày là một track dài để iPhone tiếp tục phát khi màn hình khóa.</div>
+  </div>
+</div>
+<audio id="audio" preload="metadata" playsinline></audio>
+<script src="data.js"></script>
+<script>
+const state={day:1,lang:'en',speed:1,repeat:false,profile:null};
+const $=id=>document.getElementById(id);
+const base=location.href.substring(0,location.href.lastIndexOf('/')+1);
+function loadProfile(){try{return JSON.parse(localStorage.getItem('l100_profile')||'null')}catch{return null}}
+function saveProfile(p){localStorage.setItem('l100_profile',JSON.stringify(p))}
+function setScreen(){const p=loadProfile();state.profile=p;if(p){$('setup').classList.add('hidden');$('app').classList.remove('hidden');$('hello').textContent=p.name||'bạn';render()}else{$('setup').classList.remove('hidden');$('app').classList.add('hidden')}}
+function activeVoice(){return state.profile?.voice==='female'?'female':'male'}
+function current(){return (LESSONS[state.lang]||{})[state.day]||[]}
+function renderDays(){let html='';for(let d=1;d<=100;d++){const available=Boolean((LESSONS[state.lang]||{})[d]);html+=`<button class="btn day ${d===state.day?'active':''} ${available?'':'disabled'}" data-day="${d}" ${available?'':'disabled'}><div class="d">Ngày ${d}</div><div class="t">${(DAY_TITLES[d]||'Đang biên soạn')}</div></button>`}$('days').innerHTML=html;document.querySelectorAll('.day').forEach(b=>b.addEventListener('click',()=>{state.day=Number(b.dataset.day);location.hash='day='+state.day;resetAudio();render()}))}
+function renderSentences(){const arr=current();$('sentences').innerHTML=arr.length?arr.map((x,i)=>`<div class="sentence"><div class="line1">${i+1}. ${x.text}</div>${state.lang==='zh'?`<div class="pinyin">${x.pinyin||''}</div>`:''}<div class="vi">${x.vi}</div><div class="tags">${(x.structures||[]).map(s=>`<span class="tag ${s.new?'new':'old'}">${s.new?'🆕 Mới':'♻️ Cũ'} · ${s.name}</span>`).join('')}</div><div class="explain">${x.explain}</div></div>`).join(''):'<div class="notice">Ngày này chưa có nội dung.</div>'}
+function render(){const arr=current();$('dayTitle').textContent=`Ngày ${state.day} · ${DAY_TITLES[state.day]||'Đang biên soạn'}`;$('daySubtitle').textContent=`${arr.length} câu · ${state.lang==='en'?'English':'Mandarin Chinese'} · giọng ${activeVoice()==='female'?'nữ':'nam'}`;document.querySelectorAll('.lang').forEach(b=>b.classList.toggle('active',b.dataset.lang===state.lang));renderDays();renderSentences();$('repeatBtn').textContent=`🔁 Lặp: ${state.repeat?'Bật':'Tắt'}`;const p=state.profile; if(p){$('name').value=p.name||'';$('age').value=p.age||'';$('gender').value=p.gender||'other';$('voice').value=p.voice||'male'}updateMedia()} 
+function audioSrc(){return `${base}audio-generated/${state.lang}/${activeVoice()}/day-${String(state.day).padStart(2,'0')}.mp3`}
+const audio=$('audio');
+function resetAudio(){audio.pause();audio.removeAttribute('src');audio.load();$('nowLabel').textContent='Chưa phát';$('nowSub').textContent='';$('bar').style.width='0';$('seek').value=0;$('audioStatus').textContent='Đã đổi ngày. Bấm “Phát cả ngày”.';$('audioError').classList.add('hidden')}
+function play(){if(!current().length){$('audioStatus').textContent='Ngày này chưa có dữ liệu.';return}audio.src=audioSrc();audio.playbackRate=state.speed;audio.loop=state.repeat;audio.load();$('audioStatus').textContent='Đang tải audio…';const p=audio.play();if(p&&p.catch)p.catch(e=>{showErr(`Không phát được audio. Kiểm tra xem file ${audioSrc()} đã được tạo/chứa trên GitHub Pages chưa.`);});}
+function showErr(t){$('audioError').textContent=t;$('audioError').classList.remove('hidden');$('audioStatus').textContent='Audio chưa sẵn sàng.'}
+function updateMedia(){if(!('mediaSession' in navigator))return; navigator.mediaSession.metadata=new MediaMetadata({title:`Ngày ${state.day}: ${DAY_TITLES[state.day]||''}`,artist:'100 Ngày Giao Tiếp',album:state.lang==='en'?'English':'Mandarin Chinese'});['play','pause'].forEach(a=>navigator.mediaSession.setActionHandler(a,()=>{if(a==='play')play();else audio.pause()});)}
+$('saveProfile').onclick=()=>{const p={name:$('name').value.trim(),age:$('age').value,gender:$('gender').value,voice:$('voice').value};if(!p.name){alert('Nhập tên trước nhé.');return}saveProfile(p);setScreen()};
+$('profileBtn').onclick=()=>{if(!state.profile){setScreen();return}$('setup').classList.remove('hidden');$('app').classList.add('hidden')};
+document.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{state.lang=b.dataset.lang;resetAudio();render()});
+document.querySelectorAll('.speed').forEach(b=>b.onclick=()=>{state.speed=Number(b.dataset.speed);document.querySelectorAll('.speed').forEach(x=>x.classList.toggle('active',x.dataset.speed===b.dataset.speed));audio.playbackRate=state.speed});
+$('playAll').onclick=play;$('repeatBtn').onclick=()=>{state.repeat=!state.repeat;audio.loop=state.repeat;render()};$('toggle').onclick=()=>audio.paused?play():audio.pause();$('next').onclick=()=>{if(state.day<100){state.day++;resetAudio();render()}};$('back').onclick=()=>{if(state.day>1){state.day--;resetAudio();render()}};
+audio.addEventListener('loadedmetadata',()=>{$('audioStatus').textContent='Audio sẵn sàng. Có thể khóa iPhone sau khi bấm phát.';$('audioError').classList.add('hidden');$('nowLabel').textContent=`Ngày ${state.day} · ${state.lang==='en'?'English':'中文'}`;$('nowSub').textContent=`${Math.round(audio.duration/60*10)/10} phút · ${activeVoice()==='female'?'giọng nữ':'giọng nam'}`});
+audio.addEventListener('timeupdate',()=>{if(audio.duration){const v=audio.currentTime/audio.duration*1000;$('seek').value=v;$('bar').style.width=(v/10)+'%'}});
+audio.addEventListener('play',()=>{$('toggle').textContent='⏸';$('audioStatus').textContent='Đang phát…'});audio.addEventListener('pause',()=>{$('toggle').textContent='▶'});audio.addEventListener('ended',()=>{$('toggle').textContent='▶';if(state.repeat){return;}$('audioStatus').textContent='Đã phát xong ngày này.'});audio.addEventListener('error',()=>showErr(`Audio lỗi: ${audioSrc()} — chưa có file MP3. Hãy chạy GitHub Actions → Generate free AI audio (Kokoro) trước.`));
+$('seek').oninput=()=>{if(audio.duration)audio.currentTime=(Number($('seek').value)/1000)*audio.duration};
+window.addEventListener('hashchange',()=>{const m=location.hash.match(/day=(\d+)/);if(m){const d=Number(m[1]);if(d>=1&&d<=100&&(LESSONS[state.lang]||{})[d]){state.day=d;resetAudio();render()}}});
+const m=location.hash.match(/day=(\d+)/);if(m)state.day=Number(m[1]);setScreen();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js?v=9').catch(()=>{})}
+</script>
+</body></html>
